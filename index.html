@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UNCTRUMP — $UNCTRUMP</title>
+<link rel="icon" type="image/png" href="logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bangers&family=Permanent+Marker&family=Teko:wght@400;500;600&family=Patrick+Hand&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --parchment: #f5efe6;
+    --parchment-dark: #ede4d6;
+    --parchment-darker: #e0d5c4;
+    --ink: #1a1208;
+    --ink-light: #3d2f1a;
+    --gold: #b8922a;
+    --gold-light: #d4aa45;
+    --gold-pale: #f0e0b0;
+    --brown: #5c3d1e;
+    --gray-warm: #c9bfaf;
+    --strip-bg: #1a1208;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background-color: var(--parchment);
+    color: var(--ink);
+    font-family: 'Patrick Hand', cursive;
+    font-size: 17px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* GRAIN TEXTURE */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9999;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.06'/%3E%3C/svg%3E");
+    opacity: 0.4;
+  }
+
+  /* ============ HEADER ============ */
+  header {
+    background: var(--parchment-dark);
+    border-bottom: 2px solid var(--ink);
+    padding: 0 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 72px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .logo-circle {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 2px solid var(--ink);
+    background: var(--gold-pale);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Bangers', cursive;
+    font-size: 18px;
+    letter-spacing: 1px;
+    color: var(--ink);
+    overflow: hidden;
+  }
+
+  .logo-circle img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .logo-text {
+    font-family: 'Bangers', cursive;
+    font-size: 26px;
+    letter-spacing: 3px;
+    color: var(--ink);
+    line-height: 1;
+  }
+
+  .logo-sub {
+    font-family: 'Patrick Hand', cursive;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--brown);
+    text-transform: uppercase;
+    display: block;
+    margin-top: 2px;
+  }
+
+  .header-nav {
+    display: flex;
+    gap: 2.5rem;
+  }
+
+  .header-nav a {
+    font-family: 'Patrick Hand', cursive;
+    font-size: 12px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    text-decoration: none;
+    font-weight: 500;
+    border-bottom: 1px solid transparent;
+    padding-bottom: 2px;
+    transition: border-color 0.2s, color 0.2s;
+  }
+
+  .header-nav a:hover {
+    color: var(--ink);
+    border-color: var(--ink);
+  }
+
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .icon-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1.5px solid var(--ink);
+    background: transparent;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+    text-decoration: none;
+    color: var(--ink);
+  }
+
+  .icon-btn:hover { background: var(--gold-pale); }
+
+  .icon-btn svg { width: 16px; height: 16px; }
+
+  .gold-pill {
+    background: var(--gold);
+    color: #fff;
+    font-family: 'Patrick Hand', cursive;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-weight: 500;
+    padding: 9px 18px;
+    border-radius: 40px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+    white-space: nowrap;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .gold-pill:hover { background: var(--gold-light); transform: translateY(-1px); }
+
+  /* ============ SCROLLING STRIP ============ */
+  .ticker-strip {
+    background: var(--strip-bg);
+    color: var(--gold-pale);
+    padding: 10px 0;
+    overflow: hidden;
+    border-bottom: 1px solid #3d2f1a;
+  }
+
+  .ticker-inner {
+    display: flex;
+    gap: 0;
+    white-space: nowrap;
+    animation: ticker 30s linear infinite;
+  }
+
+  .ticker-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0;
+    font-family: 'Patrick Hand', cursive;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 0 2.5rem;
+  }
+
+  .ticker-item::after {
+    content: '·';
+    margin-left: 2.5rem;
+    color: var(--gold);
+    font-size: 18px;
+    line-height: 0;
+    position: relative;
+    top: 1px;
+  }
+
+  @keyframes ticker {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  /* ============ HERO ============ */
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr 420px;
+    gap: 4rem;
+    padding: 5rem 3rem 4rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    align-items: start;
+  }
+
+  .hero-left {}
+
+  .hero-eyebrow {
+    font-family: 'Patrick Hand', cursive;
+    font-size: 10px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 500;
+    margin-bottom: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .hero-eyebrow::before {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 1px;
+    background: var(--gold);
+  }
+
+  .hero-title {
+    font-family: 'Bangers', cursive;
+    font-size: clamp(68px, 8vw, 105px);
+    line-height: 0.95;
+    color: var(--ink);
+    letter-spacing: 1px;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-title em {
+    color: var(--gold);
+    font-style: normal;
+  }
+
+  .hero-body {
+    font-family: 'Patrick Hand', cursive;
+    font-size: 17px;
+    line-height: 1.75;
+    color: var(--ink-light);
+    max-width: 520px;
+    margin-bottom: 2rem;
+    font-weight: 300;
+  }
+
+  .hero-buttons {
+    display: flex;
+    gap: 14px;
+    margin-bottom: 3rem;
+    flex-wrap: wrap;
+  }
+
+  .btn-gold {
+    background: var(--gold);
+    color: #fff;
+    font-family: 'Patrick Hand', cursive;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 500;
+    padding: 13px 28px;
+    border: 2px solid var(--gold);
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .btn-gold:hover { background: var(--gold-light); transform: translateY(-2px); }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--ink);
+    font-family: 'Patrick Hand', cursive;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 500;
+    padding: 13px 28px;
+    border: 2px solid var(--ink);
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .btn-outline:hover { background: var(--parchment-darker); transform: translateY(-2px); }
+
+  .hero-stats {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .stat-card {
+    border: 1.5px solid var(--ink);
+    background: var(--parchment-dark);
+    padding: 1rem 1.5rem;
+    min-width: 140px;
+    position: relative;
+    transition: transform 0.2s;
+  }
+
+  .stat-card::before {
+    content: '';
+    position: absolute;
+    inset: 4px;
+    border: 1px solid var(--brown);
+    pointer-events: none;
+    opacity: 0.4;
+  }
+
+  .stat-card:hover { transform: translateY(-3px); }
+
+  .stat-num {
+    font-family: 'Bangers', cursive;
+    font-size: 42px;
+    color: var(--gold);
+    letter-spacing: 1px;
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-family: 'Patrick Hand', cursive;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    margin-top: 4px;
+  }
+
+  /* HERO RIGHT */
+  .hero-right {}
+
+  .portrait-frame {
+    border: 3px solid var(--ink);
+    padding: 10px;
+    background: var(--parchment-dark);
+    position: relative;
+    margin-bottom: 1.5rem;
+    transition: transform 0.2s;
+  }
+
+  .portrait-frame::before {
+    content: '';
+    position: absolute;
+    inset: 6px;
+    border: 1px solid var(--brown);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .portrait-frame img {
+    width: 100%;
+    display: block;
+    aspect-ratio: 1;
+    object-fit: cover;
+    background: var(--parchment-darker);
+  }
+
+  .portrait-frame:hover { transform: translateY(-4px); }
+
+  .portrait-placeholder {
+    width: 100%;
+    aspect-ratio: 1;
+    background: var(--parchment-darker);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .placeholder-icon {
+    width: 80px;
+    height: 80px;
+    border: 2px solid var(--gray-warm);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .placeholder-icon svg { width: 40px; height: 40px; fill: var(--gray-warm); }
+
+  .placeholder-text {
+    font-family: 'Patrick Hand', cursive;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gray-warm);
+  }
+
+  .contract-box {
+    border: 1.5px solid var(--ink);
+    background: var(--strip-bg);
+    padding: 12px 16px;
+    margin-bottom: 1.5rem;
+  }
+
+  .contract-label {
+    font-size: 10px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 5px;
+  }
+
+  .contract-addr {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--gold-pale);
+    word-break: break-all;
+    letter-spacing: 0.5px;
+  }
+
+  .style-desc-box {
+    border: 1.5px solid var(--ink);
+    background: var(--parchment-dark);
+    padding: 1.2rem 1.5rem;
+    position: relative;
+  }
+
+  .style-desc-box::before {
+    content: '';
+    position: absolute;
+    inset: 5px;
+    border: 1px solid var(--brown);
+    pointer-events: none;
+    opacity: 0.4;
+  }
+
+  .style-desc-title {
+    font-family: 'Patrick Hand', cursive;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 10px;
+    font-weight: 500;
+  }
+
+  .style-desc-box ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .style-desc-box ul li {
+    font-size: 15px;
+    color: var(--ink-light);
+    padding: 4px 0;
+    padding-left: 16px;
+    position: relative;
+    font-weight: 300;
+    line-height: 1.5;
+  }
+
+  .style-desc-box ul li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--gold);
+    font-size: 12px;
+  }
+
+  /* ============ SECTION COMMON ============ */
+  section {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 4rem 3rem;
+  }
+
+  .section-divider {
+    width: 100%;
+    height: 1px;
+    background: var(--ink);
+    opacity: 0.2;
+    margin: 0 3rem;
+    max-width: calc(100% - 6rem);
+  }
+
+  .section-eyebrow {
+    font-family: 'Patrick Hand', cursive;
+    font-size: 10px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 500;
+    margin-bottom: 0.8rem;
+  }
+
+  .section-title {
+    font-family: 'Bangers', cursive;
+    font-size: clamp(46px, 5.5vw, 70px);
+    color: var(--ink);
+    letter-spacing: 2px;
+    line-height: 1;
+    margin-bottom: 2.5rem;
+  }
+
+  /* ============ CHARACTER IDENTITY ============ */
+  .identity-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+
+  .identity-card {
+    border: 2px solid var(--ink);
+    background: var(--parchment-dark);
+    padding: 2rem 1.5rem;
+    position: relative;
+    transition: transform 0.2s;
+  }
+
+  .identity-card::before {
+    content: '';
+    position: absolute;
+    inset: 6px;
+    border: 1px solid var(--brown);
+    pointer-events: none;
+    opacity: 0.35;
+  }
+
+  .identity-card:hover { transform: translateY(-5px); }
+
+  .card-num {
+    font-family: 'Bangers', cursive;
+    font-size: 66px;
+    color: var(--parchment-darker);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+
+  .card-title {
+    font-family: 'Bangers', cursive;
+    font-size: 26px;
+    letter-spacing: 2px;
+    color: var(--ink);
+    margin-bottom: 0.7rem;
+  }
+
+  .card-body {
+    font-size: 15px;
+    color: var(--ink-light);
+    line-height: 1.6;
+    font-weight: 300;
+  }
+
+  /* ============ TOKEN STORY ============ */
+  .token-section {
+    background: var(--parchment-dark);
+    border-top: 2px solid var(--ink);
+    border-bottom: 2px solid var(--ink);
+    padding: 4rem 3rem;
+  }
+
+  .token-section > .inner {
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .token-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    margin-top: 2.5rem;
+  }
+
+  .token-card {
+    border: 2px solid var(--ink);
+    background: var(--parchment);
+    padding: 1.8rem 1.5rem;
+    position: relative;
+    transition: transform 0.2s;
+  }
+
+  .token-card::before {
+    content: '';
+    position: absolute;
+    inset: 5px;
+    border: 1px solid var(--brown);
+    pointer-events: none;
+    opacity: 0.3;
+  }
+
+  .token-card:hover { transform: translateY(-4px); }
+
+  .token-pct {
+    font-family: 'Bangers', cursive;
+    font-size: 60px;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .token-name {
+    font-family: 'Patrick Hand', cursive;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--ink);
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+
+  .token-desc {
+    font-size: 12px;
+    color: var(--ink-light);
+    font-weight: 300;
+    line-height: 1.5;
+  }
+
+  .token-note {
+    margin-top: 2rem;
+    padding: 1.2rem 1.5rem;
+    border: 1px solid var(--ink);
+    background: var(--strip-bg);
+    color: var(--gold-pale);
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  /* ============ DEX SECTION ============ */
+  .dex-section {
+    padding: 4rem 3rem;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .dex-frame {
+    border: 3px solid var(--ink);
+    background: var(--parchment-dark);
+    padding: 12px;
+    position: relative;
+    margin-bottom: 1.5rem;
+  }
+
+  .dex-frame::before {
+    content: '';
+    position: absolute;
+    inset: 7px;
+    border: 1px solid var(--brown);
+    pointer-events: none;
+    opacity: 0.4;
+    z-index: 1;
+  }
+
+  .dex-chart-inner {
+    width: 100%;
+    height: 500px;
+    background: #0d0d0d;
+    position: relative;
+  }
+
+  .dex-chart-inner iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
+  }
+
+  .dex-actions {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  /* ============ MEME VAULT ============ */
+  .vault-section {
+    background: var(--parchment-darker);
+    border-top: 2px solid var(--ink);
+    border-bottom: 2px solid var(--ink);
+    padding: 4rem 3rem;
+  }
+
+  .vault-section > .inner {
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .vault-subtitle {
+    font-size: 15px;
+    color: var(--ink-light);
+    font-weight: 300;
+    letter-spacing: 1px;
+    margin-bottom: 3rem;
+    font-family: 'Permanent Marker', cursive;
+    font-style: italic;
+  }
+
+  .vault-subsection {
+    margin-bottom: 3.5rem;
+  }
+
+  .vault-sub-title {
+    font-family: 'Patrick Hand', cursive;
+    font-size: 10px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .vault-sub-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--gold);
+    opacity: 0.4;
+  }
+
+  .meme-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 1.2rem;
+  }
+
+  .meme-frame {
+    border: 2.5px solid var(--ink);
+    padding: 8px;
+    background: var(--parchment-dark);
+    position: relative;
+    transition: transform 0.25s, box-shadow 0.25s;
+    cursor: pointer;
+  }
+
+  .meme-frame::before {
+    content: '';
+    position: absolute;
+    inset: 5px;
+    border: 1px solid var(--brown);
+    pointer-events: none;
+    opacity: 0.4;
+    z-index: 1;
+  }
+
+  .meme-frame:hover {
+    transform: translateY(-6px);
+    box-shadow: 6px 8px 0px var(--ink);
+  }
+
+  .meme-frame img {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    display: block;
+    background: var(--parchment-darker);
+  }
+
+  .meme-placeholder {
+    width: 100%;
+    aspect-ratio: 1;
+    background: var(--parchment-darker);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .meme-label {
+    font-family: 'Patrick Hand', cursive;
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    text-align: center;
+    padding: 6px 4px 2px;
+  }
+
+  .meme-num {
+    font-family: 'Bangers', cursive;
+    font-size: 11px;
+    color: var(--gray-warm);
+  }
+
+  /* ============ FOOTER ============ */
+  footer {
+    background: var(--strip-bg);
+    border-top: 2px solid var(--gold);
+    padding: 3rem;
+    text-align: center;
+  }
+
+  .footer-logo {
+    font-family: 'Bangers', cursive;
+    font-size: 36px;
+    letter-spacing: 6px;
+    color: var(--gold-pale);
+    margin-bottom: 1rem;
+  }
+
+  .footer-tagline {
+    font-family: 'Permanent Marker', cursive;
+    font-style: italic;
+    font-size: 17px;
+    color: var(--gold);
+    margin-bottom: 0.5rem;
+  }
+
+  .footer-disclaimer {
+    font-size: 11px;
+    color: #6b5c45;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-top: 1.5rem;
+  }
+
+  .footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 1.5rem;
+  }
+
+  .footer-links a {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    text-decoration: none;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+  }
+
+  .footer-links a:hover { opacity: 1; }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; gap: 2.5rem; }
+    .identity-cards { grid-template-columns: 1fr; }
+    .token-grid { grid-template-columns: 1fr 1fr; }
+    header { padding: 0 1.5rem; }
+    .header-nav { display: none; }
+    section { padding: 3rem 1.5rem; }
+    .vault-section, .token-section { padding: 3rem 1.5rem; }
+    .dex-section { padding: 3rem 1.5rem; }
+    footer { padding: 2rem 1.5rem; }
+  }
+
+  @media (max-width: 600px) {
+    .token-grid { grid-template-columns: 1fr; }
+    .meme-grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); }
+    .hero-stats { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ HEADER ============ -->
+<header>
+  <div class="header-left">
+    <div class="logo-circle">
+      <img src="meme1.jpg" alt="UNCTRUMP" onerror="this.style.display='none'; this.parentElement.innerHTML='UNCTRUMP';">
+    </div>
+    <div>
+      <div class="logo-text">UNCTRUMP</div>
+      <span class="logo-sub">$UNCTRUMP</span>
+    </div>
+  </div>
+
+  <nav class="header-nav">
+    <a href="#lore">Lore</a>
+    <a href="#tokenomics">Tokenomics</a>
+    <a href="#vault">Meme Vault</a>
+  </nav>
+
+  <div class="header-right">
+    <a href="https://x.com/ogmodeonsol" target="_blank" class="icon-btn" aria-label="X / Twitter">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.738l7.729-8.835L1.254 2.25H8.08l4.259 5.63 5.905-5.63zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+    </a>
+    <a href="#club" class="gold-pill">Retirement Pump Club</a>
+  </div>
+</header>
+
+<!-- ============ TICKER STRIP ============ -->
+<div class="ticker-strip" aria-hidden="true">
+  <div class="ticker-inner" id="ticker">
+    <span class="ticker-item">Boomer Wojak, zero chill</span>
+    <span class="ticker-item">Raised in comment-section warfare</span>
+    <span class="ticker-item">Retired body, gangsta spirit</span>
+    <span class="ticker-item">Thin lines, loud personality</span>
+    <span class="ticker-item">This is satire, not financial advice</span>
+    <span class="ticker-item">Boomer Wojak, zero chill</span>
+    <span class="ticker-item">Raised in comment-section warfare</span>
+    <span class="ticker-item">Retired body, gangsta spirit</span>
+    <span class="ticker-item">Thin lines, loud personality</span>
+    <span class="ticker-item">This is satire, not financial advice</span>
+  </div>
+</div>
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="lore">
+  <div class="hero-left">
+    <div class="hero-eyebrow">Chapter One — The Origin</div>
+    <h1 class="hero-title">
+      UNCTRUMP ($UNCTRUMP):<br>
+      OLD BONES,<br>
+      <em>GOLD CHAIN,</em><br>
+      ZERO FEAR.
+    </h1>
+    <p class="hero-body">
+      He didn't retire from the streets. The streets retired from him. Born from the meme wars, shaped by comment-section carnage, and dressed in irony so thick it has its own chain weight. $UNCTRUMP isn't a token — it's a personality disorder launched on Pump.fun on Solana. Old Man Wojak didn't just survive the bear market. He became it.
+    </p>
+    <div class="hero-buttons">
+      <a href="#lore" class="btn-gold">Read the Lore</a>
+      <a href="#tokenomics" class="btn-outline">View Tokenomics</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-card">
+        <div class="stat-num">9,001</div>
+        <div class="stat-label">Missed Pumps</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">24K UNCTRUMP</div>
+        <div class="stat-label">Chain Weight</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">21</div>
+        <div class="stat-label">Meme Frames</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="portrait-frame">
+      <img src="meme1.jpg" alt="UNCTRUMP mascot portrait" onerror="this.outerHTML='<div class=\'portrait-placeholder\'><div class=\'placeholder-icon\'><svg viewBox=\'0 0 24 24\'><path d=\'M12 2a5 5 0 1 1 0 10A5 5 0 0 1 12 2zm0 12c5.33 0 8 2.67 8 4v2H4v-2c0-1.33 2.67-4 8-4z\'/></svg></div><span class=\'placeholder-text\'>meme1.jpg</span></div>'">
+    </div>
+
+    <div class="contract-box">
+      <div class="contract-label">Mint Address</div>
+      <div class="contract-addr">abcdpumpfun</div>
+    </div>
+
+    <div class="style-desc-box">
+      <div class="style-desc-title">Visual Identity Notes</div>
+      <ul>
+        <li>Thin black outlines, intentionally rough style</li>
+        <li>Strong facial expression and wrinkled personality</li>
+        <li>Simplified body shape with ironic posture</li>
+        <li>Clean backdrop that keeps the character in focus</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ============ CHARACTER IDENTITY ============ -->
+<section>
+  <div class="section-eyebrow">Character Study</div>
+  <h2 class="section-title">THE "OLD MAN WOJAK" FLAVOR,<br>REWIRED FOR MEME CULTURE</h2>
+
+  <div class="identity-cards">
+    <div class="identity-card">
+      <div class="card-num">01</div>
+      <div class="card-title">Classic Wojak DNA</div>
+      <p class="card-body">Every wrinkle carries a market cycle. The blank stare that watched SOL rip and dip and didn't blink. Pure Wojak lineage — just with more back pain and stronger opinions about priority fees.</p>
+    </div>
+    <div class="identity-card">
+      <div class="card-num">02</div>
+      <div class="card-title">Old School Flex</div>
+      <p class="card-body">He still wears his first hardware wallet on a gold chain. The kind of flex that doesn't need explanation. Been through three bear markets, held through them all, and still tips the server in SOL.</p>
+    </div>
+    <div class="identity-card">
+      <div class="card-num">03</div>
+      <div class="card-title">Satirical Core</div>
+      <p class="card-body">$UNCTRUMP is not financial advice wrapped in irony — it's irony wrapped in a disclaimer. Built for those who know the difference between a degen play and a life plan, and choose both anyway.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TOKENOMICS ============ -->
+<div class="token-section" id="tokenomics">
+  <div class="inner">
+    <div class="section-eyebrow">Launch</div>
+    <h2 class="section-title">TOKENOMICS</h2>
+    <div class="style-desc-box" style="max-width: 520px; margin: 0 auto;">
+      <ul>
+        <li>Launched on Pump.fun</li>
+        <li>Fair Launch</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ============ DEX + BUY ============ -->
+<section class="dex-section">
+  <div class="section-eyebrow">Live Market Data</div>
+  <h2 class="section-title">CHART &amp; BUY</h2>
+
+  <div class="dex-frame">
+    <div class="dex-chart-inner">
+      <iframe
+        src="https://dexscreener.com/solana/abcdpumpfun?embed=1&loadChartSettings=0&chartLeftToolbar=0&chartTheme=dark&theme=dark&chartStyle=1&chartType=marketCap&interval=1"
+        title="Dexscreener Solana Chart"
+        loading="lazy"
+      ></iframe>
+    </div>
+  </div>
+
+  <div class="dex-actions">
+    <a href="https://swap.pump.fun/?input=So11111111111111111111111111111111111111112&output=abcdpumpfun" target="_blank" class="btn-gold">Buy on PumpSwap</a>
+    <a href="https://dexscreener.com/solana/abcdpumpfun" target="_blank" class="btn-outline">View on Dexscreener</a>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ============ MEME VAULT ============ -->
+<div class="vault-section" id="vault">
+  <div class="inner">
+    <div class="section-eyebrow">The Archive</div>
+    <h2 class="section-title">MEME VAULT</h2>
+    <p class="vault-subtitle">All uploaded images organized and framed like old portrait pieces — the complete visual record of the UNCTRUMP lifestyle.</p>
+
+    <!-- LIFESTYLE ARC -->
+    <div class="vault-subsection">
+      <div class="vault-sub-title">Lifestyle Arc</div>
+      <div class="meme-grid">
+        <div class="meme-frame">
+          <img src="meme1.jpg" alt="Meme 1" onerror="this.outerHTML='<div class=\'meme-placeholder\'><span class=\'meme-num\'>01</span></div>'">
+          <div class="meme-label">Meme 1</div>
+        </div>
+        <div class="meme-frame">
+          <img src="meme2.jpg" alt="Meme 2" onerror="this.outerHTML='<div class=\'meme-placeholder\'><span class=\'meme-num\'>02</span></div>'">
+          <div class="meme-label">Meme 2</div>
+        </div>
+        <div class="meme-frame">
+          <img src="meme3.jpg" alt="Meme 3" onerror="this.outerHTML='<div class=\'meme-placeholder\'><span class=\'meme-num\'>03</span></div>'">
+          <div class="meme-label">Meme 3</div>
+        </div>
+        <div class="meme-frame">
+          <img src="meme4.jpg" alt="Meme 4" onerror="this.outerHTML='<div class=\'meme-placeholder\'><span class=\'meme-num\'>04</span></div>'">
+          <div class="meme-label">Meme 4</div>
+        </div>
+        <div class="meme-frame">
+          <img src="meme5.jpg" alt="Meme 5" onerror="this.outerHTML='<div class=\'meme-placeholder\'><span class=\'meme-num\'>05</span></div>'">
+          <div class="meme-label">Meme 5</div>
+        </div>
+        <div class="meme-frame">
+          <img src="meme6.jpg" alt="Meme 6" onerror="this.outerHTML='<div class=\'meme-placeholder\'><span class=\'meme-num\'>06</span></div>'">
+          <div class="meme-label">Meme 6</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ACTION ARC -->
+    <div class="vault-subsection">
+      <div class="vault-sub-title">Action Arc</div>
+      <div class="meme-grid">
+        <div class="meme-frame">
+          <img src="meme7.jpg" alt="Meme 7" onerror="this.outerHTML='<div class=\'meme-placeholder\'><span class=\'meme-num\'>07</span></div>'">
+          <div class="meme-label">Meme 7</div>
+        </div>
+        <div class="meme-frame">
+          <img src="meme8.jpg" alt="Meme 8" onerror="this.outerHTML='<div class=\'meme-placeholder\'><span class=\'meme-num\'>08</span></div>'">
+          <div class="meme-label">Meme 8</div>
+        </div>
+        <div class="meme-frame">
+          <img src="meme9.jpg" alt="Meme 9" onerror="this.outerHTML='<div class=\'meme-placeholder\'><span class=\'meme-num\'>09</span></div>'">
+          <div class="meme-label">Meme 9</div>
+        </div>
+        <div class="meme-frame">
+          <img src="meme10.jpg" alt="Meme 10" onerror="this.outerHTML='<div class=\'meme-placeholder\'><span class=\'meme-num\'>10</span></div>'">
+          <div class="meme-label">Meme 10</div>
+        </div>
+        <div class="meme-frame">
+          <img src="meme11.jpg" alt="Meme 11" onerror="this.outerHTML='<div class=\'meme-placeholder\'><span class=\'meme-num\'>11</span></div>'">
+          <div class="meme-label">Meme 11</div>
+        </div>
+        <div class="meme-frame">
+          <img src="meme12.jpg" alt="Meme 12" onerror="this.outerHTML='<div class=\'meme-placeholder\'><span class=\'meme-num\'>12</span></div>'">
+          <div class="meme-label">Meme 12</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RETRO NIGHTS -->
+    <div class="vault-subsection">
+      <div class="vault-sub-title">Retro Nights</div>
+      <div class="meme-grid">
+        <div class="meme-frame">
+          <img src="meme13.jpg" alt="Meme 13" onerror="this.outerHTML='<div class=\'meme-placeholder\'><span class=\'meme-num\'>13</span></div>'">
+          <div class="meme-label">Meme 13</div>
+        </div>
+        <div class="meme-frame">
+          <img src="meme14.jpg" alt="Meme 14" onerror="this.outerHTML='<div class=\'meme-placeholder\'><span class=\'meme-num\'>14</span></div>'">
+          <div class="meme-label">Meme 14</div>
+        </div>
+        <div class="meme-frame">
+          <img src="meme15.jpg" alt="Meme 15" onerror="this.outerHTML='<div class=\'meme-placeholder\'><span class=\'meme-num\'>15</span></div>'">
+          <div class="meme-label">Meme 15</div>
+        </div>
+        <div class="meme-frame">
+          <img src="meme16.jpg" alt="Meme 16" onerror="this.outerHTML='<div class=\'meme-placeholder\'><span class=\'meme-num\'>16</span></div>'">
+          <div class="meme-label">Meme 16</div>
+        </div>
+        <div class="meme-frame">
+          <img src="meme17.jpg" alt="Meme 17" onerror="this.outerHTML='<div class=\'meme-placeholder\'><span class=\'meme-num\'>17</span></div>'">
+          <div class="meme-label">Meme 17</div>
+        </div>
+        <div class="meme-frame">
+          <img src="meme18.jpg" alt="Meme 18" onerror="this.outerHTML='<div class=\'meme-placeholder\'><span class=\'meme-num\'>18</span></div>'">
+          <div class="meme-label">Meme 18</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PORTRAIT STUDIES -->
+    <div class="vault-subsection">
+      <div class="vault-sub-title">Portrait Studies</div>
+      <div class="meme-grid">
+        <div class="meme-frame">
+          <img src="meme19.jpg" alt="Meme 19" onerror="this.outerHTML='<div class=\'meme-placeholder\'><span class=\'meme-num\'>19</span></div>'">
+          <div class="meme-label">Meme 19</div>
+        </div>
+        <div class="meme-frame">
+          <img src="meme20.jpg" alt="Meme 20" onerror="this.outerHTML='<div class=\'meme-placeholder\'><span class=\'meme-num\'>20</span></div>'">
+          <div class="meme-label">Meme 20</div>
+        </div>
+        <div class="meme-frame">
+          <img src="meme21.jpg" alt="Meme 21" onerror="this.outerHTML='<div class=\'meme-placeholder\'><span class=\'meme-num\'>21</span></div>'">
+          <div class="meme-label">Meme 21</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="footer-logo">UNCTRUMP</div>
+  <p class="footer-tagline">UNCTRUMP runs on attitude, lore, and replay value.</p>
+  <p class="footer-tagline" style="opacity:0.6; font-size:13px;">No promises, just signature style.</p>
+  <div class="footer-links">
+    <a href="https://x.com/ogmodeonsol" target="_blank">X / Twitter</a>
+    <a href="https://swap.pump.fun/?input=So11111111111111111111111111111111111111112&output=abcdpumpfun" target="_blank">PumpSwap</a>
+    <a href="https://dexscreener.com/solana/abcdpumpfun" target="_blank">Dexscreener</a>
+  </div>
+  <p class="footer-disclaimer">This is satire, not financial advice. $UNCTRUMP is a meme token for entertainment purposes.</p>
+</footer>
+
+<script>
+  // Smooth scroll
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+    });
+  });
+
+  // Entrance animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.identity-card, .token-card, .meme-frame, .stat-card').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>
